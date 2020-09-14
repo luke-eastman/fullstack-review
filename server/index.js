@@ -8,6 +8,8 @@ app.post('/repos', function (req, res) {
   // This route should take the github username provided
   // and get the repo information from the github API, then
   // save the repo information in the database
+  console.log('hit /repos');
+  res.send()
 });
 
 app.get('/repos', function (req, res) {
