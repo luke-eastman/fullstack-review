@@ -2,8 +2,7 @@ import React from 'react';
 
 const Repo = ({repo}) => (
   <div>
-    <div>Title: {repo.name}</div>
-    <div>URL: {repo.url}</div>
+    <a href={repo.url}>Title: {repo.name}</a>
     <div>Forks: {repo.popularity}</div>
   </div>
 );
