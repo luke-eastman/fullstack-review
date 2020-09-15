@@ -23,6 +23,7 @@ class App extends React.Component {
         username: term
       },
       success: () => {
+        console.log('here')
         this.getRepos();
       }
     });
@@ -33,17 +34,23 @@ class App extends React.Component {
       type: 'GET',
       url: '/repos',
       success: (repos) => {
+        console.log('got repos')
+        console.log(repos)
         this.setState({repos: repos});
+      },
+      error: () => {
+        console.log('failed')
       }
     })
   }
 
 
+  componentDidMount () {
+    console.log('component mounted')
+    this.getRepos();
+  }
 
   render () {
-    if (this.state.repos.length === 0) {
-      this.getRepos();
-    }
     return (<div>
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>

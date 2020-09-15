@@ -9,25 +9,26 @@ app.use(express.urlencoded({
 }));
 
 app.post('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should take the github username provided
-  // and get the repo information from the github API, then
-  // save the repo information in the database
-
-
   helpers.getReposByUsername(req.body.username, (err, repos) => {
-    db.save(repos);
+    db.save(repos)
+    .then(() => {
+      console.log(repos)
+      res.send();
+    });
   });
 
-  res.send();
+
 });
 
-app.get('/repos', function (req, res) {
+app.get('/repos', (req, res) => {
   // TODO - your code here!
   // This route should send back the top 25 repos
-  db.fetchTopRepos((err, repos) => {
+  console.log('ready to get')
+  db.fetchTopRepos((repos) => {;
+    console.log('this is happening');
     res.send(repos);
   });
+
 
 });
 
