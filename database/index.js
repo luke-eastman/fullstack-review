@@ -15,27 +15,23 @@ let save = (repos) => {
   // This function should save a repo or repos to
   // the MongoDB
   return new Promise((resolve, reject) => {
-    repos.forEach(repo => {
-      var query = Repo.find({url: repo.url});
-      query.exec((err, result) => {
-        if (result.length === 0) {
-          console.log('creating')
-          resolve(Repo.create({
-            name: repo.name,
-            url: repo.url,
-            popularity: repo.forks
-          }));
-        } else {
-          resolve(Repo.updateOne({url: repo.url}, {
-            popularity: repo.forks
-          }));
-        }
-      })
-      console.log('inside')
+    var count = 0;
+    repos.map(repo => {
+      var repoToSave = new Repo({
+        name: repo.name,
+        url: repo.url,
+        popularity: repo.forks,
+      });
 
-    })
-    console.log('then end');
-  });
+      repoToSave.save((err) => {
+        count++;
+        if(count === repos.length) {
+          resolve('success');
+        }
+      });
+
+    });
+  })
 }
 
 let fetchTopRepos = (callback) => {
@@ -44,17 +40,14 @@ let fetchTopRepos = (callback) => {
     console.log()
     reposToRender = [];
     repos.forEach(repo => {
-      console.log('are there any repo')
       reposToRender.push({
         name: repo.name,
         url: repo.url,
         popularity: repo.popularity
       })
     })
-   console.log('repos to ' , reposToRender)
   })
   .then(() => {
-    console.log('repos to render ', reposToRender)
     callback(reposToRender);
   });
 }
