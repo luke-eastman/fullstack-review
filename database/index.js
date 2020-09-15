@@ -14,11 +14,21 @@ let save = (repos) => {
   // This function should save a repo or repos to
   // the MongoDB
   repos.forEach(repo => {
-    Repo.create({
-      name: repo.name,
-      url: repo.url,
-      popularity: repo.forks
-    });
+    var query = Repo.find({url: repo.url});
+    query.exec((err, result) => {
+      if (result.length === 0) {
+        Repo.create({
+          name: repo.name,
+          url: repo.url,
+          popularity: repo.forks
+        });
+      } else {
+        Repo.updateOne({url: repo.url}, {
+          popularity: repo.forks
+        });
+      }
+    })
+
   })
 }
 
