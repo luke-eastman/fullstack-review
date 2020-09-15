@@ -9,14 +9,14 @@ let getReposByUsername = (username, callback) => {
   // but you'll have to fill in the URL
   let options = {
     method: 'GET',
-    url: 'https://api.github.com',
+    url: `https://api.github.com/users/${username}/repos`,
     headers: {
       'User-Agent': 'request',
       'Authorization': `token ${config.TOKEN}`
     }
   };
 
-  axios.get(`https://api.github.com/users/${username}/repos`)
+  axios(options)
   .then(response => {
     var repos = [];
     response.data.forEach(repo => {
