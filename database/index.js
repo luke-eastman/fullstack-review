@@ -22,4 +22,21 @@ let save = (repos) => {
   })
 }
 
+let fetchTopRepos = (callback) => {
+  var query = Repo.find({}).sort({popularity: -1}).limit(25);
+  query.exec((err, repos) => {
+    reposToRender = [];
+    repos.forEach(repo => {
+      reposToRender.push({
+        name: repo.name,
+        url: repo.url,
+        popularity: repo.popularity
+      })
+    })
+    callback(err, reposToRender);
+  });
+
+}
+
 module.exports.save = save;
+module.exports.fetchTopRepos = fetchTopRepos;

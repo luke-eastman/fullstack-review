@@ -25,9 +25,22 @@ class App extends React.Component {
     });
   }
 
+  getRepos () {
+    $.ajax({
+      type: 'GET',
+      url: '/repos',
+      success: (repos) => {
+        this.setState({repos: repos});
+      }
+    })
+  }
+
 
 
   render () {
+    if (this.state.repos.length === 0) {
+      this.getRepos();
+    }
     return (<div>
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>

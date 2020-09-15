@@ -19,12 +19,16 @@ app.post('/repos', function (req, res) {
     db.save(repos);
   });
 
-  res.send()
+  res.send();
 });
 
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
+  db.fetchTopRepos((err, repos) => {
+    res.send(repos);
+  });
+
 });
 
 let port = 1128;
