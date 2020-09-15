@@ -21,6 +21,9 @@ class App extends React.Component {
       url: '/repos',
       data: {
         username: term
+      },
+      success: () => {
+        this.getRepos();
       }
     });
   }
